@@ -7,15 +7,17 @@ using UnityEngine.UI;
 
 public class BallController : MonoBehaviour
 {
-    public Vector3 direction = new Vector3(-1,0,0);
+    public Vector3 direction = new Vector3(-1000,0,0);
     public Rigidbody rb;
     public GameObject lPointsBoard;
     public int lPoints = 0;
     public GameObject rPointsBoard;
     public int rPoints = 0;
     public GameObject winText;
+    public int bounces = 0;
+    public Quaternion rotation = Quaternion.Euler(0f, -60f, 0f);
+    public float bounceForce = 1000f;
 
-    
     // Start is called before the first frame update
     void Start()
     {
@@ -23,16 +25,63 @@ public class BallController : MonoBehaviour
         rb.AddForce(direction, ForceMode.Acceleration);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
-        direction *= -1;
-        rb.AddForce(direction, ForceMode.Acceleration);
+        BoxCollider bc = collision.gameObject.GetComponent<BoxCollider>();
+        Bounds bounds = bc.bounds;
+        float maxZ = bounds.max.z;
+        float minZ = bounds.min.z;
+        float midZ = bounds.center.z;
+
+        if (collision.gameObject.CompareTag("Paddle"))
+        {
+            if (bounces < 14)
+            {
+                bounces++;
+                bounceForce *= 1.1f;
+            }
+            Debug.Log($"z pos of ball is {rb.transform.position.z}");
+            rb.velocity = Vector3.zero;
+
+            if (rb.transform.position.z < maxZ && rb.transform.position.z > midZ)
+            {
+                Debug.Log($"ball is near top");
+                if (collision.gameObject.name == "LPaddle")
+                {
+                    rotation = Quaternion.Euler(0f, -120f, 0f);
+                }
+                else
+                {
+                    rotation = Quaternion.Euler(0f, 120f, 0f);
+                }
+            }
+            else if (rb.transform.position.z > minZ && rb.transform.position.z < midZ)
+            {
+                Debug.Log($"ball is near bottom");
+                if (collision.gameObject.name == "LPaddle")
+                {
+                    rotation = Quaternion.Euler(0f, -60f, 0f);
+                }
+                else
+                {
+                    rotation = Quaternion.Euler(0f, 60f, 0f);
+                }
+            }
+            else
+            {
+                if (collision.gameObject.name == "LPaddle")
+                {
+                    rotation = Quaternion.Euler(0f, 0f, 0f);
+                }
+                else
+                {
+                    rotation = Quaternion.Euler(0f, -180f, 0f);
+                }
+            }
+            Vector3 bounceDirection = rotation * Vector3.back;
+            rb.AddForce(bounceDirection * bounceForce, ForceMode.Acceleration);
+        }
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -43,35 +92,44 @@ public class BallController : MonoBehaviour
             lPoints++;
             lPointsBoard.GetComponent<TextMeshProUGUI>().SetText(lPoints.ToString());
             rb.transform.position = new Vector3(0, 0, 0);
+            direction = new Vector3(1000,0,0);
+            bounces = 0;
+            bounceForce = 1000f;
             if (lPoints >= 10)
             {
-                winText.GetComponent<TextMeshProUGUI>().SetText("Left Side Wins!");
-                Debug.Log($"Left Side Wins! Final Score is {lPoints} to {rPoints}");
-                winText.SetActive(true);
                 rb.isKinematic = true;
+                winText.GetComponent<TextMeshProUGUI>().SetText("Game Over, Left Paddle Wins!");
+                Debug.Log($"Game Over, Left Paddle Wins! Final Score is {lPoints} to {rPoints}");
+                winText.SetActive(true);
                 Invoke(nameof(ResetBoard),5);
             }
             else
             {
-                Debug.Log($"Left Side Scored! Current Score is {lPoints} to {rPoints}");
+                Debug.Log($"Left Paddle Scored! Current Score is {lPoints} to {rPoints}");
+                rb.velocity = Vector3.zero;
+                rb.AddForce(direction, ForceMode.Acceleration);
             }
         }else if (other.name == "LGoal")
         {
             rPoints++;
             rPointsBoard.GetComponent<TextMeshProUGUI>().SetText(rPoints.ToString());
             rb.transform.position = new Vector3(0, 0, 0);
+            bounces = 0;
+            bounceForce = 1000f;
+            direction = new Vector3(-1000,0,0);
             if (rPoints >= 10)
             {
                 rb.isKinematic = true;
-                winText.GetComponent<TextMeshProUGUI>().SetText("Right Side Wins!");
-                Debug.Log($"Left Side Wins! Final Score is {lPoints} to {rPoints}");
+                winText.GetComponent<TextMeshProUGUI>().SetText("Game Over, Right Paddle Wins!");
+                Debug.Log($"Game Over, Right Paddle Wins! Final Score is {lPoints} to {rPoints}");
                 winText.SetActive(true);
-                rb.isKinematic = true;
                 Invoke(nameof(ResetBoard),5);
             }
             else
             {
-                Debug.Log($"Right Side Scored! Current Score is {lPoints} to {rPoints}");
+                Debug.Log($"Right Paddle Scored! Current Score is {lPoints} to {rPoints}");
+                rb.velocity = Vector3.zero;
+                rb.AddForce(direction, ForceMode.Acceleration);
             }
         }
     }
@@ -83,9 +141,11 @@ public class BallController : MonoBehaviour
         rPointsBoard.GetComponent<TextMeshProUGUI>().SetText("0");
         lPoints = 0;
         rPoints = 0;
+        bounces = 0;
+        bounceForce = 1000f;
         rb.isKinematic = false;
         rb.AddForce(direction, ForceMode.Acceleration);
+        rb.transform.position = new Vector3(0, 0, 0);
 
     }
-    
 }
