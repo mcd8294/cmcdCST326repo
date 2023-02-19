@@ -17,6 +17,7 @@ public class BallController : MonoBehaviour
     private int bounces = 0;
     private Quaternion rotation = Quaternion.Euler(0f, -60f, 0f);
     public float bounceForce = 1000f;
+   
     public AudioClip bounceUp;
     public AudioClip bounceDown;
     private bool isBounceUp = true;
