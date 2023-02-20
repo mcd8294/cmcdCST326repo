@@ -11,13 +11,11 @@ public class Collectable : MonoBehaviour
     public TextMeshProUGUI scoreBoard;
     public int coinCount = 0;
     
-    // Start is called before the first frame update
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         Ray toMouse = gameCamera.ScreenPointToRay(Input.mousePosition);
@@ -35,5 +33,4 @@ public class Collectable : MonoBehaviour
             }
         }
     }
-    
 }
