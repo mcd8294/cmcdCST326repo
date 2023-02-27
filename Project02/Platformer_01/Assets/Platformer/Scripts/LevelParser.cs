@@ -11,6 +11,8 @@ public class LevelParser : MonoBehaviour
     public GameObject brickPrefab;
     public GameObject questionBoxPrefab;
     public GameObject stonePrefab;
+    public GameObject waterPrefab;
+    public GameObject goalPrefab;
     public Transform environmentRoot;
 
     // --------------------------------------------------------------------------
@@ -70,6 +72,12 @@ public class LevelParser : MonoBehaviour
                 }else if (letter == 's')
                 {
                     Instantiate(stonePrefab, new Vector3(column, row, 0f), Quaternion.identity);
+                }else if (letter == 'w')
+                {
+                    Instantiate(waterPrefab, new Vector3(column, row, 0f), Quaternion.identity);
+                }else if (letter == 'g')
+                {
+                    Instantiate(goalPrefab, new Vector3(column, row, 0f), Quaternion.identity);
                 }
                 // Todo - Instantiate a new GameObject that matches the type specified by letter
                 // Todo - Position the new GameObject at the appropriate location by using row and column
