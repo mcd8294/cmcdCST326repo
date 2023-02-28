@@ -389,7 +389,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 245343131}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.44, y: 2.37, z: 0}
+  m_LocalPosition: {x: 19.05, y: 2.37, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -441,11 +441,12 @@ MonoBehaviour:
   sprintBoost: 3
   jumpForce: 6
   jumpBoost: 2
-  groundRange: 0.1
+  groundRange: 0.15
   isGrounded: 0
   headRange: 0.2
   headTouch: 0
   col: {fileID: 0}
+  charAnimator: {fileID: 213482896}
   coinCollect:
     m_PersistentCalls:
       m_Calls:
@@ -476,7 +477,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  charAnimator: {fileID: 213482896}
 --- !u!114 &245343138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1379,7 +1379,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 14.17, y: 5.84, z: -14.98}
+  m_LocalPosition: {x: 22.779999, y: 5.84, z: -14.98}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

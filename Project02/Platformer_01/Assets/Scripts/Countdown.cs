@@ -12,6 +12,7 @@ public class Countdown : MonoBehaviour
     public bool timed;
 
     public UnityEvent lvlFailed;
+
     void Start()
     {
         _timerUI = gameObject.GetComponent<TextMeshProUGUI>();
