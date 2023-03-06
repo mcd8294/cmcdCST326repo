@@ -1,0 +1,78 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class EnemyControl : MonoBehaviour
+{
+    public int enemyCount;
+    public Rigidbody2D rb;
+    public Vector2 direction = Vector2.right;
+    public bool isOnCooldown = false;
+    public GameObject hitCooldown;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        rb.velocity = Vector2.right * direction * 1f;
+    }
+
+    public void UpdateEnemyCount()
+    {
+        enemyCount--;
+    }
+
+    public void ChangeEnemyDirection()
+    {
+        if (hitCooldown.activeSelf)
+        {
+            StartCoroutine(Cooldown(isOnCooldown, 1f));            
+            rb.position += new Vector2(0f, -.5f);
+            direction = -direction;
+        }
+    }
+
+    private IEnumerator Cooldown(bool cooldown, float waitTime)
+    {
+        if (!cooldown)
+        {
+            cooldown = true;
+        }
+
+        yield return new WaitForSeconds(waitTime);
+        cooldown = false;
+    }
+
+    public bool GetCooldown()
+    {
+        return isOnCooldown;
+    }
+    
+    private IEnumerator CreativeCooldown(GameObject cooldown, float waitTime)
+    {
+        if (cooldown.activeSelf)
+        {
+            cooldown.SetActive(false);
+        }
+
+        yield return new WaitForSeconds(waitTime);
+        cooldown.SetActive(true);
+    }
+    
+    IEnumerator delayRestart(float time)
+    {
+        yield return new WaitForSeconds(time);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void RestartScene()
+    {
+        StartCoroutine(delayRestart(3f));
+    }
+}
