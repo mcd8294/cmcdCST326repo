@@ -11,7 +11,6 @@ public class Player : MonoBehaviour
   public float speed = 10f;
   public float maxSpeed = 3f;
   public Rigidbody2D rb;
-
   public Transform shottingOffset;
   public GameObject coolDown;
 
@@ -21,7 +20,6 @@ public class Player : MonoBehaviour
   {
     rb = GetComponent<Rigidbody2D>();
   }
-
   // Update is called once per frame
     void Update()
     {
@@ -35,7 +33,6 @@ public class Player : MonoBehaviour
 
       }
     }
-
     private void FixedUpdate()
     {
       float axis = Input.GetAxis("Horizontal");
@@ -50,12 +47,10 @@ public class Player : MonoBehaviour
       rb.velocity = new Vector2(xVelocity, rb.velocity.y);
 
     }
-
     void MoveCharacter(float axis)
     {
       rb.velocity += axis*Vector2.right*Time.deltaTime*speed;
     }
-
     private void OnCollisionEnter2D(Collision2D col)
     {
       if (col.gameObject.CompareTag("EnemyBullet"))

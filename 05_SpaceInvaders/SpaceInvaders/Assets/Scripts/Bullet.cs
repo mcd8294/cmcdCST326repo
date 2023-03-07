@@ -23,4 +23,13 @@ public class Bullet : MonoBehaviour
       myRigidbody2D.velocity = Vector2.up * speed; 
       Debug.Log("Wwweeeeee");
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+      if (collision.gameObject.CompareTag("EnemyBullet"))
+      {
+        Destroy(collision.gameObject);
+        Destroy(gameObject);
+      }
+    }
 }

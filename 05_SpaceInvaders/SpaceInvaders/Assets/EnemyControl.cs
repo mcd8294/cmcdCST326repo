@@ -10,24 +10,27 @@ public class EnemyControl : MonoBehaviour
     public Vector2 direction = Vector2.right;
     public bool isOnCooldown = false;
     public GameObject hitCooldown;
+    public float speed = 15f;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
     }
-
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        rb.velocity = Vector2.right * direction * 1f;
+        rb.velocity = Vector2.right * direction * speed;
     }
-
     public void UpdateEnemyCount()
     {
         enemyCount--;
+        speed *= 1.15f;
+        if (enemyCount <= 0)
+        {
+            RestartScene();
+        }
     }
-
     public void ChangeEnemyDirection()
     {
         if (hitCooldown.activeSelf)
@@ -37,40 +40,20 @@ public class EnemyControl : MonoBehaviour
             direction = -direction;
         }
     }
-
     private IEnumerator Cooldown(bool cooldown, float waitTime)
     {
         if (!cooldown)
         {
             cooldown = true;
         }
-
         yield return new WaitForSeconds(waitTime);
         cooldown = false;
     }
-
-    public bool GetCooldown()
-    {
-        return isOnCooldown;
-    }
-    
-    private IEnumerator CreativeCooldown(GameObject cooldown, float waitTime)
-    {
-        if (cooldown.activeSelf)
-        {
-            cooldown.SetActive(false);
-        }
-
-        yield return new WaitForSeconds(waitTime);
-        cooldown.SetActive(true);
-    }
-    
     IEnumerator delayRestart(float time)
     {
         yield return new WaitForSeconds(time);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
-
     public void RestartScene()
     {
         StartCoroutine(delayRestart(3f));

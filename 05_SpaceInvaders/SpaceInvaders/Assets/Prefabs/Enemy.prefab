@@ -182,3 +182,7 @@ MonoBehaviour:
       m_Calls: []
   shottingOffset: {fileID: 3067570876573553827}
   isOnCooldown: 0
+  pointValue: 10
+  destroyed:
+    m_PersistentCalls:
+      m_Calls: []

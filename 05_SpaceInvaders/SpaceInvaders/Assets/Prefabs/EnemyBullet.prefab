@@ -101,7 +101,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 384
+    m_Bits: 896
   m_LayerOverridePriority: 1
   m_ForceSendLayers:
     serializedVersion: 2
@@ -157,7 +157,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 5
 --- !u!114 &-8390449314197450359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,7 +170,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23cefb1955929c3429484c4729400224, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  restartScene:
-    m_PersistentCalls:
-      m_Calls: []
   speed: 10

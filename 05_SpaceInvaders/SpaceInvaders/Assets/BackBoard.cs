@@ -6,17 +6,6 @@ using UnityEngine;
 public class BackBoard : MonoBehaviour
 {
     public GameObject hitCooldown;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -24,7 +13,7 @@ public class BackBoard : MonoBehaviour
         {
             Debug.Log("Miss");
             hitCooldown.SetActive(true);
-            Destroy(collision.gameObject);
+            Destroy(collision.gameObject,0.1f);
         }
     }
 }
