@@ -28,9 +28,7 @@ public class Player : MonoBehaviour
         coolDown.SetActive(false);
         GameObject shot = Instantiate(bullet, shottingOffset.position, Quaternion.identity);
         Debug.Log("Bang!");
-
         Destroy(shot, 3f);
-
       }
     }
     private void FixedUpdate()
@@ -43,9 +41,7 @@ public class Player : MonoBehaviour
       {
         xVelocity *= 0.9f;
       }
-
       rb.velocity = new Vector2(xVelocity, rb.velocity.y);
-
     }
     void MoveCharacter(float axis)
     {

@@ -22,17 +22,15 @@ public class Enemy : MonoBehaviour
         {
             StartCoroutine(Cooldown(Random.Range(10f, 30f)));
         }
-        if (transform.position.y < -12)
-        {
-            gameOver.Invoke();
-        }
     }
-    // Start is called before the first frame update
     void OnCollisionEnter2D(Collision2D collision)
     {
       if (collision.gameObject.CompareTag("Border")&&hitCooldown.activeSelf)
       {
           hitBorder.Invoke();
+      }else if (collision.gameObject.CompareTag("Finish")||collision.gameObject.CompareTag("Player"))
+      {
+          gameOver.Invoke();
       }
 
       if (collision.gameObject.CompareTag("PlayerBullet"))

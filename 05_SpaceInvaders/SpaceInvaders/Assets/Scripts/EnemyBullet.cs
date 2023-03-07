@@ -16,8 +16,6 @@ public class EnemyBullet : MonoBehaviour
       myRigidbody2D = GetComponent<Rigidbody2D>();
       Fire();
     }
-
-    // Update is called once per frame
     private void Fire()
     {
       myRigidbody2D.velocity = Vector2.down * speed; 
@@ -26,8 +24,8 @@ public class EnemyBullet : MonoBehaviour
     {
       if (col.gameObject.CompareTag("Barricade"))
       {
-        Destroy(gameObject);
         Destroy(col.gameObject);
+        Destroy(gameObject);
       }
     }
 }

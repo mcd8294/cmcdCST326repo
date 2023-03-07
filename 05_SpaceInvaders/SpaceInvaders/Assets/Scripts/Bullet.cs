@@ -16,20 +16,16 @@ public class Bullet : MonoBehaviour
       myRigidbody2D = GetComponent<Rigidbody2D>();
       Fire();
     }
-
-    // Update is called once per frame
     private void Fire()
     {
       myRigidbody2D.velocity = Vector2.up * speed; 
-      Debug.Log("Wwweeeeee");
     }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-      if (collision.gameObject.CompareTag("EnemyBullet"))
-      {
-        Destroy(collision.gameObject);
-        Destroy(gameObject);
-      }
-    }
+    // private void OnCollisionEnter2D(Collision2D col)
+    // {
+    //   if (col.gameObject.CompareTag("EnemyBullet"))
+    //   {
+    //     Destroy(col.gameObject);
+    //     Destroy(gameObject);
+    //   }
+    // }
 }

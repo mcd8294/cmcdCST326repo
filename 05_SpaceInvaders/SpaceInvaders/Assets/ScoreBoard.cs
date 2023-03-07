@@ -32,6 +32,6 @@ public class ScoreBoard : MonoBehaviour
     }
     public void SaveScore(int score)
     {
-        PlayerPrefs.SetInt(scoreKey, hiScore);
+        PlayerPrefs.SetInt(scoreKey, score);
     }
 }
