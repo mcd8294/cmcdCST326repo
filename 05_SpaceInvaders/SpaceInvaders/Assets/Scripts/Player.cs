@@ -13,12 +13,16 @@ public class Player : MonoBehaviour
   public Rigidbody2D rb;
   public Transform shottingOffset;
   public GameObject coolDown;
+  public AudioSource shootSFX;
+  public AudioClip destroySFX;
+  public Animator MyAnimator;
 
   public UnityEvent restartScene;
 
   private void Awake()
   {
     rb = GetComponent<Rigidbody2D>();
+    MyAnimator = GetComponent<Animator>();
   }
   // Update is called once per frame
     void Update()
@@ -27,6 +31,8 @@ public class Player : MonoBehaviour
       { 
         coolDown.SetActive(false);
         GameObject shot = Instantiate(bullet, shottingOffset.position, Quaternion.identity);
+        shootSFX.Play();
+        MyAnimator.Play("PlayerShoot");
         Debug.Log("Bang!");
         Destroy(shot, 3f);
       }
@@ -52,8 +58,10 @@ public class Player : MonoBehaviour
       if (col.gameObject.CompareTag("EnemyBullet"))
       {
         Debug.Log("Ouch!");
+        MyAnimator.Play("PlayerDestroyed");
         restartScene.Invoke();
-        Destroy(gameObject);
+        shootSFX.PlayOneShot(destroySFX);
+        Destroy(gameObject, 1.5f);
         Destroy(col.gameObject);
       }
     }

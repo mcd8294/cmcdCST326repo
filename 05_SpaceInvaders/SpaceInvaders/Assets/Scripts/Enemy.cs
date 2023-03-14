@@ -13,12 +13,22 @@ public class Enemy : MonoBehaviour
     public UnityEvent hitBorder;
     public Transform shottingOffset;
     public bool isOnCooldown = true;
+    public AudioSource shootSFX;
+    public AudioClip destroySFX;
+    public Animator myAnimator;
+    public bool isAlive = true;
 
     public UnityEvent destroyed;
     public UnityEvent gameOver;
+
+    private void Start()
+    {
+        myAnimator = gameObject.GetComponent<Animator>();
+    }
+
     private void Update()
     {
-        if (!isOnCooldown)
+        if (!isOnCooldown && isAlive)
         {
             StartCoroutine(Cooldown(Random.Range(10f, 30f)));
         }
@@ -39,7 +49,10 @@ public class Enemy : MonoBehaviour
           destroyed.Invoke();
           Destroy(collision.gameObject);
           bulletCooldown.SetActive(true);
-          Destroy(gameObject);
+          shootSFX.PlayOneShot(destroySFX);
+          myAnimator.Play("AdvancedEnemyDestroyed");
+          isAlive = false;
+          Destroy(gameObject, 0.5f);
       }
     }
     private IEnumerator Cooldown(float waitTime)
@@ -52,6 +65,8 @@ public class Enemy : MonoBehaviour
     void ShootBullet()
     {
         GameObject shot = Instantiate(bullet, shottingOffset.position, Quaternion.identity);
+        shootSFX.Play();
+        myAnimator.Play("AdvancedEnemyShoot");
         Destroy(shot, 3f);
     }
 }

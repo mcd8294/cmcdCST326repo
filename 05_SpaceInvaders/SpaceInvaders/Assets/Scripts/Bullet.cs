@@ -20,12 +20,5 @@ public class Bullet : MonoBehaviour
     {
       myRigidbody2D.velocity = Vector2.up * speed; 
     }
-    // private void OnCollisionEnter2D(Collision2D col)
-    // {
-    //   if (col.gameObject.CompareTag("EnemyBullet"))
-    //   {
-    //     Destroy(col.gameObject);
-    //     Destroy(gameObject);
-    //   }
-    // }
+
 }
