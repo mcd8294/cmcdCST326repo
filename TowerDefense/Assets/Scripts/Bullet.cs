@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,8 @@ public class Bullet : MonoBehaviour
 {
     public float speed = 70f;
     public GameObject bulletImpactEffect;
+    public float exploionRadius = 0f;
+    public int damage = 50;
     
     private Transform target;
 
@@ -32,6 +35,7 @@ public class Bullet : MonoBehaviour
         }
         
         transform.Translate(dir.normalized*distanceThisFrame, Space.World);
+        transform.LookAt(target);
     }
 
     void HitTarget()
@@ -39,7 +43,38 @@ public class Bullet : MonoBehaviour
         Debug.Log("HIT!");
         GameObject effectIns = (GameObject)Instantiate(bulletImpactEffect, transform.position, transform.rotation);
         Destroy(effectIns, 2f);
+
+        if (exploionRadius > 0f)
+        {
+            Collider[] colliders = Physics.OverlapSphere(transform.position, exploionRadius);
+            foreach (Collider collider in colliders)
+            {
+                if (collider.CompareTag("Enemy"))
+                {
+                    Damage(collider.transform);
+                }
+            }
+        }
+        else
+        {
+            Damage(target);
+        }
+        
         Destroy(target.gameObject);
-        Destroy(gameObject);
+    }
+
+    void Damage(Transform enemy)
+    {
+        Enemy e = enemy.GetComponent<Enemy>();
+        if (e != null)
+        {
+            e.TakeDamage(damage);
+        }
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(transform.position, exploionRadius);
     }
 }
