@@ -60,7 +60,7 @@ public class Bullet : MonoBehaviour
             Damage(target);
         }
         
-        Destroy(target.gameObject);
+        //Destroy(target.gameObject);
     }
 
     void Damage(Transform enemy)
