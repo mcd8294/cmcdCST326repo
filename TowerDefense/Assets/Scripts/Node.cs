@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using UnityEngine;
-
 public class Node : MonoBehaviour
 {
     public Color hoverColor;
@@ -23,7 +22,6 @@ public class Node : MonoBehaviour
         rend = GetComponent<Renderer>();
         startColor = rend.material.color;
     }
-
     public Vector3 GetBuildPosition()
     {
         return transform.position + positionOffset;
@@ -41,12 +39,10 @@ public class Node : MonoBehaviour
 
         buildManager.BuildTurretOn(this);
     }
-
     private void OnMouseEnter()
     {
         if(EventSystem.current.IsPointerOverGameObject())
             return;
-        
         if(!buildManager.CanBuild)
             return;
         if (buildManager.HasMoney)
@@ -57,9 +53,7 @@ public class Node : MonoBehaviour
         {
             rend.material.color = notEnoughMoneyColor;
         }
-        
     }
-
     private void OnMouseExit()
     {
         rend.material.color = startColor;
