@@ -28,14 +28,17 @@ public class Node : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        if(!buildManager.CanBuild)
+        if(EventSystem.current.IsPointerOverGameObject())
             return;
         
         if (turret != null)
         {
-            Debug.Log("Can't build there, space occupied");
+            buildManager.SelectNode(this);
             return;
         }
+
+        if(!buildManager.CanBuild)
+            return;
 
         buildManager.BuildTurretOn(this);
     }
