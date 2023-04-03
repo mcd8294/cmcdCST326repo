@@ -5,7 +5,6 @@ public class CameraController : MonoBehaviour
 {
     public float panSpeed = 30f;
     public float panBorderThickness = 10f;
-    public bool doMovement = true;
     public float scrollSpeed = 5f;
     public float minY = 10f;
     public float maxY = 80f;
@@ -16,12 +15,6 @@ public class CameraController : MonoBehaviour
             this.enabled = false;
             return;
         }
-        if (Input.GetKey(KeyCode.Escape))
-        {
-            doMovement = !doMovement;
-        }
-        if(!doMovement)
-            return;
         if (Input.GetKey("w")|| Input.mousePosition.y >= Screen.height - panBorderThickness)
         {
             transform.Translate(Vector3.forward * panSpeed * Time.deltaTime, Space.World);
