@@ -1,24 +1,24 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
-{
-    public float speed = 70f;
-    public GameObject bulletImpactEffect;
-    public float exploionRadius = 0f;
-    public int damage = 50;
-    
+public class Bullet : MonoBehaviour {
+
     private Transform target;
 
-    public void seek(Transform _target)
+    public float speed = 70f;
+
+    public int damage = 50;
+
+    public float explosionRadius = 0f;
+    public GameObject impactEffect;
+	
+    public void Seek (Transform _target)
     {
         target = _target;
     }
+
     // Update is called once per frame
-    void Update()
-    {
+    void Update () {
+
         if (target == null)
         {
             Destroy(gameObject);
@@ -33,45 +33,53 @@ public class Bullet : MonoBehaviour
             HitTarget();
             return;
         }
-        
-        transform.Translate(dir.normalized*distanceThisFrame, Space.World);
+
+        transform.Translate(dir.normalized * distanceThisFrame, Space.World);
         transform.LookAt(target);
+
     }
 
-    void HitTarget()
+    void HitTarget ()
     {
-        GameObject effectIns = (GameObject)Instantiate(bulletImpactEffect, transform.position, transform.rotation);
-        Destroy(effectIns, 2f);
+        GameObject effectIns = (GameObject)Instantiate(impactEffect, transform.position, transform.rotation);
+        Destroy(effectIns, 5f);
 
-        if (exploionRadius > 0f)
+        if (explosionRadius > 0f)
         {
-            Collider[] colliders = Physics.OverlapSphere(transform.position, exploionRadius);
-            foreach (Collider collider in colliders)
-            {
-                if (collider.CompareTag("Enemy"))
-                {
-                    Damage(collider.transform);
-                }
-            }
-        }
-        else
+            Explode();
+        } else
         {
             Damage(target);
         }
+
+        Destroy(gameObject);
     }
 
-    void Damage(Transform enemy)
+    void Explode ()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
+        foreach (Collider collider in colliders)
+        {
+            if (collider.CompareTag("Enemy"))
+            {
+                Damage(collider.transform);
+            }
+        }
+    }
+
+    void Damage (Transform enemy)
     {
         Enemy e = enemy.GetComponent<Enemy>();
+
         if (e != null)
         {
             e.TakeDamage(damage);
         }
     }
 
-    void OnDrawGizmosSelected()
+    void OnDrawGizmosSelected ()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawSphere(transform.position, exploionRadius);
+        Gizmos.DrawWireSphere(transform.position, explosionRadius);
     }
 }

@@ -136,7 +136,7 @@ public class Turret : MonoBehaviour
 
         if (bullet != null)
         {
-            bullet.seek(target);
+            bullet.Seek(target);
         }
     }
 
