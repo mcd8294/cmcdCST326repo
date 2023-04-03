@@ -3559,6 +3559,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildEffect: {fileID: 4420293303742864991, guid: 463ae1c4dac8dee438355c02dc86b668, type: 3}
+  sellEffect: {fileID: 4420293303742864991, guid: 86367ac43e9f7d44e87b0d13b90f0308, type: 3}
   nodeUI: {fileID: 1922754598}
 --- !u!114 &386383978
 MonoBehaviour:
@@ -18199,6 +18200,7 @@ MonoBehaviour:
   ui: {fileID: 1567128963}
   upgradeCost: {fileID: 718006324}
   upgradeButton: {fileID: 557905036}
+  sellAmount: {fileID: 1186130989}
 --- !u!4 &1922754599
 Transform:
   m_ObjectHideFlags: 0
