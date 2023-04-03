@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class PauseMenu : MonoBehaviour
 {
     public GameObject ui;
+    public string menuSceneName = "MainMenu";
+    public SceneFader sceneFader;
     // Update is called once per frame
     void Update()
     {
@@ -31,12 +33,13 @@ public class PauseMenu : MonoBehaviour
     
     public void Retry()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        Time.timeScale = 1f;
+        Toggle();
+        sceneFader.FadeTo(SceneManager.GetActiveScene().name);
     }
 
     public void Menu()
     {
-        Debug.Log("Go to menu.");
+        Toggle();
+        sceneFader.FadeTo(menuSceneName);
     }
 }
