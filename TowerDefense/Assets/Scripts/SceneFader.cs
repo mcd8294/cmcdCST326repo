@@ -13,6 +13,7 @@ public class SceneFader : MonoBehaviour
     void Start()
     {
         StartCoroutine(FadeIn());
+        SceneManager.SetActiveScene(SceneManager.GetActiveScene());
     }
 
     public void FadeTo(string scene)
