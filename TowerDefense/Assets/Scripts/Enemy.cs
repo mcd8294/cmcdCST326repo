@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
@@ -8,6 +9,7 @@ public class Enemy : MonoBehaviour
     
     [HideInInspector]
     public float speed;
+    public bool slowed = false;
     
     public float startHealth = 300;
     private float health;
@@ -20,7 +22,7 @@ public class Enemy : MonoBehaviour
     private bool isDead = false;
     void Start()
     {
-        speed = startSpeed;
+        GetComponent<NavMeshAgent>().speed = startSpeed;
         health = startHealth;
     }
     public void TakeDamage(float amount)
@@ -32,9 +34,19 @@ public class Enemy : MonoBehaviour
             Die();
         }
     }
+
+    void Update()
+    {
+        if (slowed == false)
+        {
+            GetComponent<NavMeshAgent>().speed = startSpeed;
+        }
+    }
+
     public void Slow(float pct)
     {
-        speed = startSpeed * (1f - pct);
+        GetComponent<NavMeshAgent>().speed = startSpeed * (1f - pct);
+        slowed = true;
     }
     public void Die()
     {

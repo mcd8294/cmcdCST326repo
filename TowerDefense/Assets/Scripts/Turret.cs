@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Turret : MonoBehaviour
@@ -62,6 +63,10 @@ public class Turret : MonoBehaviour
         }
         else
         {
+            if (target!=null)
+            {
+                targetEnemy.slowed = false;
+            }
             target = null;
         }
     }
